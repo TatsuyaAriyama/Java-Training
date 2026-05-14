@@ -1,0 +1,1158 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Java Training | 変数とデータ型</title>
+  <style>
+    :root {
+      --ink: #111;
+      --muted: #585858;
+      --soft: #f7f7f5;
+      --paper: #fff;
+      --line: #deded8;
+      --line-strong: #b8b8b1;
+      --red: #b31218;
+      --red-soft: #fff5f5;
+      --code: #f4f4f1;
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.055);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "Helvetica Neue", "Hiragino Kaku Gothic ProN", "Yu Gothic", "YuGothic", "Noto Sans JP", Arial, sans-serif;
+      line-height: 1.85;
+      letter-spacing: 0;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .hero {
+      width: min(1120px, calc(100% - 36px));
+      min-height: 78vh;
+      margin: 0 auto;
+      display: grid;
+      align-content: center;
+      padding: 72px 0 52px;
+    }
+
+    .brand {
+      margin: 0 0 34px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 940px;
+      margin: 0;
+      font-family: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", Georgia, serif;
+      font-size: clamp(2.65rem, 7vw, 6.2rem);
+      font-weight: 500;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 780px;
+      margin: 32px 0 0;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.18rem);
+    }
+
+    .hero-line {
+      width: min(420px, 72%);
+      height: 3px;
+      margin-top: 42px;
+      background: var(--red);
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-inner {
+      width: min(1120px, calc(100% - 36px));
+      margin: 0 auto;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 12px 0;
+    }
+
+    nav a {
+      flex: 0 0 auto;
+      color: var(--ink);
+      text-decoration: none;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      background: #fff;
+    }
+
+    nav a:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    main {
+      width: min(1120px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 52px 0 84px;
+    }
+
+    section {
+      margin: 0 0 34px;
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .chapter {
+      display: grid;
+      grid-template-columns: 160px minmax(0, 1fr);
+      min-height: 260px;
+    }
+
+    .chapter-num {
+      border-right: 1px solid var(--line);
+      padding: 30px 24px;
+      font-family: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", Georgia, serif;
+      font-size: 3rem;
+      line-height: 1;
+      color: var(--red);
+    }
+
+    .chapter-body {
+      padding: 34px;
+    }
+
+    h2 {
+      margin: 0;
+      font-family: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", Georgia, serif;
+      font-size: clamp(1.65rem, 4vw, 2.65rem);
+      font-weight: 500;
+      line-height: 1.24;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 26px 0 10px;
+      font-size: 1.06rem;
+      line-height: 1.4;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    ul {
+      margin: 10px 0 16px;
+      padding-left: 1.25rem;
+    }
+
+    li {
+      margin: 5px 0;
+    }
+
+    code {
+      border: 1px solid #e4e4df;
+      border-radius: 4px;
+      background: var(--code);
+      padding: 0.07em 0.34em;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 0.92em;
+    }
+
+    pre {
+      margin: 14px 0;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--ink);
+      background: var(--soft);
+      padding: 16px;
+      line-height: 1.6;
+      font-size: 0.92rem;
+    }
+
+    pre code {
+      border: 0;
+      background: transparent;
+      padding: 0;
+      color: inherit;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 18px 0;
+      font-size: 0.95rem;
+    }
+
+    th,
+    td {
+      border: 1px solid var(--line);
+      padding: 11px 13px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--soft);
+      font-weight: 800;
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .tile {
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 18px;
+    }
+
+    .tile strong {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 1.02rem;
+    }
+
+    .important {
+      border: 2px solid var(--red);
+      background: var(--red-soft);
+      padding: 15px 17px;
+      margin: 18px 0;
+    }
+
+    .important strong {
+      color: var(--red);
+    }
+
+    .rule {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 17px;
+    }
+
+    .panel-title {
+      margin: 0 0 8px;
+      font-weight: 800;
+    }
+
+    .panel.bad {
+      border-top: 4px solid var(--red);
+    }
+
+    .panel.good {
+      border-top: 4px solid var(--ink);
+    }
+
+    .mini {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .practice {
+      margin-top: 28px;
+      border-top: 1px solid var(--line-strong);
+      padding-top: 24px;
+    }
+
+    .practice h3 {
+      margin-top: 0;
+      display: inline-block;
+      border-bottom: 2px solid var(--red);
+      padding-bottom: 4px;
+    }
+
+    details {
+      border: 1px solid var(--line);
+      background: #fff;
+      margin-top: 12px;
+      padding: 12px 15px;
+    }
+
+    summary {
+      cursor: pointer;
+      color: var(--red);
+      font-weight: 800;
+    }
+
+    .answer-label {
+      display: inline-block;
+      margin-top: 12px;
+      border: 1px solid var(--red);
+      color: var(--red);
+      padding: 2px 8px;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .quote {
+      margin: 20px 0 0;
+      padding: 18px 22px;
+      border-left: 5px solid var(--red);
+      background: var(--soft);
+      font-family: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", Georgia, serif;
+      font-size: 1.12rem;
+      line-height: 1.8;
+    }
+
+    .toc-section {
+      padding: 28px 30px;
+    }
+
+    .toc-section h2 {
+      font-size: clamp(1.4rem, 3vw, 2.1rem);
+    }
+
+    .toc-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .toc-list a {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 12px;
+      align-items: center;
+      min-height: 68px;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      text-decoration: none;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .toc-list span {
+      color: var(--red);
+      font-family: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", Georgia, serif;
+      font-size: 1.6rem;
+    }
+
+    footer {
+      width: min(1120px, calc(100% - 36px));
+      margin: 0 auto 44px;
+      border-top: 1px solid var(--line);
+      padding-top: 18px;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    @media (max-width: 880px) {
+      .hero {
+        min-height: 66vh;
+      }
+
+      .chapter {
+        grid-template-columns: 1fr;
+      }
+
+      .chapter-num {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+        padding: 22px 24px;
+        font-size: 2.3rem;
+      }
+
+      .chapter-body {
+        padding: 24px;
+      }
+
+      .intro-grid,
+      .rule,
+      .toc-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      nav {
+        display: none;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 30px 0;
+      }
+
+      section {
+        box-shadow: none;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      pre {
+        white-space: pre-wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hero">
+      <p class="brand">Java Training</p>
+      <h1>初心者がつまずきやすい<br>変数とデータ型</h1>
+      <p class="lead">
+        Javaのエラーは、ほとんどの場合「型」「値」「参照」のどれかを取り違えたところから始まります。
+        この資料では、最初につまずきやすいポイントだけを深掘りし、ゼロから理由を説明できる状態を目指します。
+      </p>
+      <div class="hero-line"></div>
+    </div>
+  </header>
+
+  <nav aria-label="目次">
+    <div class="nav-inner">
+      <a href="#overview">全体像</a>
+      <a href="#declare">宣言と初期化</a>
+      <a href="#type">型の約束</a>
+      <a href="#division">整数の割り算</a>
+      <a href="#literal">リテラル</a>
+      <a href="#reference">参照とnull</a>
+      <a href="#string">String比較</a>
+      <a href="#var">var</a>
+      <a href="#wrapper">ラッパー型</a>
+      <a href="#decimal">小数誤差</a>
+    </div>
+  </nav>
+
+  <main>
+    <section id="overview" class="toc-section">
+      <h2>まず押さえる全体像</h2>
+      <p>
+        変数は「値に名前を付けるもの」です。ただしJavaでは、名前を付けるときに必ず「どんな種類の値を入れるか」を決めます。
+        この種類が型です。型を先に決めることで、Javaは実行前に多くの間違いを見つけられます。
+      </p>
+      <div class="intro-grid">
+        <div class="tile">
+          <strong>変数名</strong>
+          <p>人間が値を読みやすくするための名前。例: <code>score</code>, <code>userName</code></p>
+        </div>
+        <div class="tile">
+          <strong>型</strong>
+          <p>値の種類。例: <code>int</code>は整数、<code>String</code>は文字列。</p>
+        </div>
+        <div class="tile">
+          <strong>値</strong>
+          <p>実際に扱うデータ。例: <code>80</code>, <code>"Sato"</code>, <code>true</code></p>
+        </div>
+      </div>
+      <div class="quote">
+        Javaの型は、書き方を面倒にするためのものではありません。間違った値を早めに止めるための仕組みです。
+      </div>
+      <div class="toc-list">
+        <a href="#declare"><span>01</span><strong>宣言しただけの変数は使えない</strong></a>
+        <a href="#type"><span>02</span><strong>型が違う値はそのまま入らない</strong></a>
+        <a href="#division"><span>03</span><strong>整数同士の割り算は整数になる</strong></a>
+        <a href="#literal"><span>04</span><strong>文字・文字列・数値リテラルを混同する</strong></a>
+        <a href="#reference"><span>05</span><strong>参照型とnullで止まる</strong></a>
+        <a href="#string"><span>06</span><strong>Stringを==で比べてしまう</strong></a>
+        <a href="#var"><span>07</span><strong>varを動的な型だと思ってしまう</strong></a>
+        <a href="#wrapper"><span>08</span><strong>Integerなどをintと同じ感覚で比べる</strong></a>
+        <a href="#decimal"><span>09</span><strong>doubleを正確な小数だと思ってしまう</strong></a>
+      </div>
+    </section>
+
+    <section id="declare" class="chapter">
+      <div class="chapter-num">01</div>
+      <div class="chapter-body">
+        <h2>宣言しただけの変数は使えない</h2>
+        <p>
+          変数を作ることを宣言といいます。宣言は「この名前の変数を使います」とJavaに伝えるだけです。
+          そこに値を入れることを初期化といいます。Javaのローカル変数は、初期化されるまで使えません。
+        </p>
+
+        <pre><code>int score;              // 宣言だけ
+// System.out.println(score);  // エラー: 値が入っていない
+
+score = 80;             // 代入
+System.out.println(score);</code></pre>
+
+        <div class="important">
+          <strong>重要:</strong>
+          「変数がある」ことと「値が入っている」ことは別です。
+          Javaは、値が入っていない可能性があるローカル変数を使わせません。
+        </div>
+
+        <h3>なぜつまずくのか</h3>
+        <p>
+          初心者は <code>int score;</code> と書いた時点で、何か初期値が自動で入ると思いがちです。
+          しかしメソッドの中で作ったローカル変数は、自分で値を入れてからでないと使えません。
+          これは、意図しない値を使ってバグになるのを防ぐためです。
+        </p>
+
+        <div class="rule">
+          <div class="panel bad">
+            <p class="panel-title">つまずく書き方</p>
+            <pre><code>int count;
+System.out.println(count);</code></pre>
+            <p class="mini">宣言しただけなので、表示する値がありません。</p>
+          </div>
+          <div class="panel good">
+            <p class="panel-title">安全な書き方</p>
+            <pre><code>int count = 0;
+System.out.println(count);</code></pre>
+            <p class="mini">最初の値を決めてから使います。</p>
+          </div>
+        </div>
+
+        <div class="practice">
+          <h3>練習問題 01</h3>
+          <p>次のコードが動くように、必要な修正をしてください。</p>
+          <pre><code>public class Main {
+  public static void main(String[] args) {
+    int total;
+    total = total + 100;
+    System.out.println(total);
+  }
+}</code></pre>
+          <details>
+            <summary>解答例と説明</summary>
+            <span class="answer-label">解答例</span>
+            <pre><code>public class Main {
+  public static void main(String[] args) {
+    int total = 0;
+    total = total + 100;
+    System.out.println(total);
+  }
+}</code></pre>
+            <p>
+              <code>total = total + 100;</code> の右側で、まだ値が入っていない <code>total</code> を読もうとしているためエラーになります。
+              先に <code>0</code> などの初期値を入れると、<code>0 + 100</code> を計算できます。
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="type" class="chapter">
+      <div class="chapter-num">02</div>
+      <div class="chapter-body">
+        <h2>型が違う値はそのまま入らない</h2>
+        <p>
+          Javaの変数は、宣言した型に合う値だけを入れられます。
+          <code>int</code>の変数には整数、<code>boolean</code>の変数には<code>true</code>か<code>false</code>、<code>String</code>の変数には文字列を入れます。
+        </p>
+
+        <pre><code>int age = 20;
+boolean active = true;
+String name = "Sato";</code></pre>
+
+        <div class="important">
+          <strong>重要:</strong>
+          見た目が似ていても、型が違えば別物です。
+          <code>20</code>は整数、<code>"20"</code>は文字列です。
+        </div>
+
+        <h3>なぜつまずくのか</h3>
+        <p>
+          人間には <code>20</code> と <code>"20"</code> がどちらも「20」に見えます。
+          しかしJavaにとって、前者は計算できる数値、後者は文字の並びです。
+          型が違えば、できる操作も変わります。
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>値</th>
+              <th>型</th>
+              <th>できること</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>20</code></td>
+              <td><code>int</code></td>
+              <td>足し算、引き算、比較など</td>
+            </tr>
+            <tr>
+              <td><code>"20"</code></td>
+              <td><code>String</code></td>
+              <td>文字数を調べる、連結するなど</td>
+            </tr>
+            <tr>
+              <td><code>true</code></td>
+              <td><code>boolean</code></td>
+              <td>条件分岐に使う</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="practice">
+          <h3>練習問題 02</h3>
+          <p>コンパイルエラーになる行をすべて選び、正しい書き方に直してください。</p>
+          <pre><code>int price = "1200";
+String code = 1200;
+boolean paid = false;
+boolean deleted = 0;</code></pre>
+          <details>
+            <summary>解答例と説明</summary>
+            <span class="answer-label">解答例</span>
+            <pre><code>int price = 1200;
+String code = "1200";
+boolean paid = false;
+boolean deleted = false;</code></pre>
+            <p>
+              <code>int</code>には整数を入れます。<code>String</code>にはダブルクォートで囲んだ文字列を入れます。
+              <code>boolean</code>には<code>true</code>または<code>false</code>だけを入れられます。
+              Javaでは<code>0</code>を<code>false</code>として扱いません。
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="division" class="chapter">
+      <div class="chapter-num">03</div>
+      <div class="chapter-body">
+        <h2>整数同士の割り算は整数になる</h2>
+        <p>
+          <code>int</code>同士で割り算をすると、結果も<code>int</code>になります。
+          小数部分は丸められるのではなく、切り捨てられます。
+        </p>
+
+        <pre><code>int total = 5;
+int count = 2;
+
+System.out.println(total / count); // 2</code></pre>
+
+        <div class="important">
+          <strong>重要:</strong>
+          <code>5 / 2</code> は数学では <code>2.5</code> ですが、Javaで<code>int / int</code>をすると <code>2</code> になります。
+        </div>
+
+        <h3>小数の結果がほしい場合</h3>
+        <p>
+          片方を<code>double</code>にすると、小数を含む計算になります。
+          変数そのものを<code>double</code>にするか、計算時にキャストします。
+        </p>
+
+        <pre><code>int total = 5;
+int count = 2;
+
+System.out.println((double) total / count); // 2.5</code></pre>
+
+        <div class="rule">
+          <div class="panel bad">
+            <p class="panel-title">期待とずれる書き方</p>
+            <pre><code>double average = 5 / 2;
+System.out.println(average); // 2.0</code></pre>
+            <p class="mini">先に整数同士で計算され、その後<code>double</code>に入ります。</p>
+          </div>
+          <div class="panel good">
+            <p class="panel-title">意図が伝わる書き方</p>
+            <pre><code>double average = 5.0 / 2;
+System.out.println(average); // 2.5</code></pre>
+            <p class="mini">片方が小数なので、小数の割り算になります。</p>
+          </div>
+        </div>
+
+        <div class="practice">
+          <h3>練習問題 03</h3>
+          <p>平均点が<code>83.333...</code>になるように修正してください。</p>
+          <pre><code>int totalScore = 250;
+int studentCount = 3;
+double average = totalScore / studentCount;
+
+System.out.println(average);</code></pre>
+          <details>
+            <summary>解答例と説明</summary>
+            <span class="answer-label">解答例</span>
+            <pre><code>int totalScore = 250;
+int studentCount = 3;
+double average = (double) totalScore / studentCount;
+
+System.out.println(average);</code></pre>
+            <p>
+              <code>totalScore / studentCount</code>のままだと<code>int / int</code>です。
+              <code>(double) totalScore</code>と書くことで、左側を小数として扱い、結果も小数になります。
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="literal" class="chapter">
+      <div class="chapter-num">04</div>
+      <div class="chapter-body">
+        <h2>文字・文字列・数値リテラルを混同する</h2>
+        <p>
+          コードに直接書いた値をリテラルといいます。
+          Javaでは、書き方によってリテラルの型が決まります。
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>書き方</th>
+              <th>意味</th>
+              <th>例</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>100</code></td>
+              <td>整数</td>
+              <td><code>int price = 100;</code></td>
+            </tr>
+            <tr>
+              <td><code>100L</code></td>
+              <td>longの整数</td>
+              <td><code>long id = 100L;</code></td>
+            </tr>
+            <tr>
+              <td><code>0.1</code></td>
+              <td>doubleの小数</td>
+              <td><code>double rate = 0.1;</code></td>
+            </tr>
+            <tr>
+              <td><code>0.1F</code></td>
+              <td>floatの小数</td>
+              <td><code>float rate = 0.1F;</code></td>
+            </tr>
+            <tr>
+              <td><code>'A'</code></td>
+              <td>1文字</td>
+              <td><code>char rank = 'A';</code></td>
+            </tr>
+            <tr>
+              <td><code>"A"</code></td>
+              <td>文字列</td>
+              <td><code>String rank = "A";</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="important">
+          <strong>重要:</strong>
+          シングルクォートは<code>char</code>、ダブルクォートは<code>String</code>です。
+          <code>'A'</code>と<code>"A"</code>は同じ見た目でも型が違います。
+        </div>
+
+        <h3>なぜ<code>L</code>や<code>F</code>が必要なのか</h3>
+        <p>
+          整数リテラルは基本的に<code>int</code>、小数リテラルは基本的に<code>double</code>として扱われます。
+          そのため、<code>long</code>として大きな整数を書くときは<code>L</code>、<code>float</code>として小数を書くときは<code>F</code>を付けます。
+        </p>
+
+        <pre><code>long userId = 3000000000L;
+float taxRate = 0.1F;</code></pre>
+
+        <div class="practice">
+          <h3>練習問題 04</h3>
+          <p>次のコードを、すべてコンパイルできる形に直してください。</p>
+          <pre><code>char initial = "T";
+String label = 'A';
+long largeNumber = 3000000000;
+float rate = 0.08;</code></pre>
+          <details>
+            <summary>解答例と説明</summary>
+            <span class="answer-label">解答例</span>
+            <pre><code>char initial = 'T';
+String label = "A";
+long largeNumber = 3000000000L;
+float rate = 0.08F;</code></pre>
+            <p>
+              <code>char</code>はシングルクォート、<code>String</code>はダブルクォートです。
+              <code>3000000000</code>は<code>int</code>の範囲を超えるため<code>L</code>を付けます。
+              <code>0.08</code>は<code>double</code>なので、<code>float</code>に入れるなら<code>F</code>を付けます。
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="reference" class="chapter">
+      <div class="chapter-num">05</div>
+      <div class="chapter-body">
+        <h2>参照型とnullで止まる</h2>
+        <p>
+          Javaの型は、大きくプリミティブ型と参照型に分けられます。
+          プリミティブ型は値そのものを扱います。参照型は、オブジェクトの場所を指す参照を扱います。
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>分類</th>
+              <th>例</th>
+              <th>イメージ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>プリミティブ型</td>
+              <td><code>int</code>, <code>double</code>, <code>boolean</code>, <code>char</code></td>
+              <td>変数の中に値そのものがある</td>
+            </tr>
+            <tr>
+              <td>参照型</td>
+              <td><code>String</code>, 配列, クラス, <code>Integer</code></td>
+              <td>変数の中にオブジェクトへの参照がある</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          <code>null</code>は「参照先がない」という意味です。
+          参照型の変数には<code>null</code>が入ることがあります。
+          その状態でメソッドを呼ぶと、<code>NullPointerException</code>が起きます。
+        </p>
+
+        <pre><code>String name = null;
+// System.out.println(name.length()); // NullPointerException</code></pre>
+
+        <div class="important">
+          <strong>重要:</strong>
+          <code>null</code>は空文字<code>""</code>とは違います。
+          空文字は「長さ0の文字列」です。<code>null</code>は「文字列そのものがない」状態です。
+        </div>
+
+        <div class="rule">
+          <div class="panel bad">
+            <p class="panel-title">止まりやすい書き方</p>
+            <pre><code>String name = null;
+System.out.println(name.length());</code></pre>
+            <p class="mini">参照先がないのに、文字列の機能を呼んでいます。</p>
+          </div>
+          <div class="panel good">
+            <p class="panel-title">確認してから使う</p>
+            <pre><code>String name = null;
+if (name != null) {
+  System.out.println(name.length());
+}</code></pre>
+            <p class="mini">参照先がある場合だけメソッドを呼びます。</p>
+          </div>
+        </div>
+
+        <div class="practice">
+          <h3>練習問題 05</h3>
+          <p>次のコードで例外が起きないように修正してください。<code>name</code>がない場合は<code>"名前未登録"</code>と表示してください。</p>
+          <pre><code>String name = null;
+System.out.println(name.toUpperCase());</code></pre>
+          <details>
+            <summary>解答例と説明</summary>
+            <span class="answer-label">解答例</span>
+            <pre><code>String name = null;
+
+if (name == null) {
+  System.out.println("名前未登録");
+} else {
+  System.out.println(name.toUpperCase());
+}</code></pre>
+            <p>
+              <code>name</code>が<code>null</code>のとき、<code>toUpperCase()</code>は呼べません。
+              先に<code>name == null</code>で確認し、参照先がない場合の処理を分けます。
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="string" class="chapter">
+      <div class="chapter-num">06</div>
+      <div class="chapter-body">
+        <h2>Stringを==で比べてしまう</h2>
+        <p>
+          <code>String</code>は参照型です。
+          参照型に対して<code>==</code>を使うと、基本的には「同じ内容か」ではなく「同じオブジェクトを指しているか」を比べます。
+        </p>
+
+        <pre><code>String a = new String("Java");
+String b = new String("Java");
+
+System.out.println(a == b);      // false
+System.out.println(a.equals(b)); // true</code></pre>
+
+        <div class="important">
+          <strong>重要:</strong>
+          文字列の内容を比べたいときは、原則として<code>equals</code>を使います。
+          <code>==</code>は「同じ場所を指しているか」を見る、と考えます。
+        </div>
+
+        <h3>なぜややこしいのか</h3>
+        <p>
+          <code>String x = "Java";</code>のような書き方では、Javaが同じ文字列を共有することがあります。
+          そのため<code>==</code>でも<code>true</code>になるケースがあり、初心者には余計に混乱します。
+          しかし、それに頼るべきではありません。内容比較は<code>equals</code>と覚えるのが安全です。
+        </p>
+
+        <pre><code>String input = "yes";
+
+if (input.equals("yes")) {
+  System.out.println("続行します");
+}</code></pre>
+
+        <div class="practice">
+          <h3>練習問題 06</h3>
+          <p>次の条件分岐を、文字列の内容比較として安全な書き方に直してください。</p>
+          <pre><code>String answer = new String("yes");
+
+if (answer == "yes") {
+  System.out.println("OK");
+}</code></pre>
+          <details>
+            <summary>解答例と説明</summary>
+            <span class="answer-label">解答例</span>
+            <pre><code>String answer = new String("yes");
+
+if ("yes".equals(answer)) {
+  System.out.println("OK");
+}</code></pre>
+            <p>
+              <code>answer == "yes"</code>は参照の比較です。
+              <code>"yes".equals(answer)</code>なら内容を比較できます。
+              文字列リテラル側から<code>equals</code>を呼ぶと、<code>answer</code>が<code>null</code>でも例外になりにくい書き方になります。
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="var" class="chapter">
+      <div class="chapter-num">07</div>
+      <div class="chapter-body">
+        <h2>varを動的な型だと思ってしまう</h2>
+        <p>
+          <code>var</code>は、Java 10以降で使えるローカル変数の型推論です。
+          型を書かなくてよいだけで、型がなくなるわけではありません。
+        </p>
+
+        <pre><code>var score = 80;  // int と推論される
+// score = "80"; // エラー: Stringは入れられない</code></pre>
+
+        <div class="important">
+          <strong>重要:</strong>
+          <code>var</code>は「あとから何でも入れられる変数」ではありません。
+          最初の値を見て、コンパイル時に型が決まります。
+        </div>
+
+        <h3>使ってよい場面と避けたい場面</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>場面</th>
+              <th>判断</th>
+              <th>理由</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>var name = "Sato";</code></td>
+              <td>使いやすい</td>
+              <td>右側を見れば<code>String</code>だと分かる</td>
+            </tr>
+            <tr>
+              <td><code>var result = service.get();</code></td>
+              <td>注意</td>
+              <td>戻り値の型が読み手に分かりにくい場合がある</td>
+            </tr>
+            <tr>
+              <td><code>var x = null;</code></td>
+              <td>使えない</td>
+              <td><code>null</code>だけでは型を推論できない</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="practice">
+          <h3>練習問題 07</h3>
+          <p>次のコードの問題点を説明し、正しく直してください。</p>
+          <pre><code>var value = 100;
+value = "100";</code></pre>
+          <details>
+            <summary>解答例と説明</summary>
+            <span class="answer-label">解答例 1</span>
+            <pre><code>var value = 100;
+value = 200;</code></pre>
+            <span class="answer-label">解答例 2</span>
+            <pre><code>var value = "100";
+value = "200";</code></pre>
+            <p>
+              <code>var value = 100;</code>と書いた時点で、<code>value</code>は<code>int</code>です。
+              その後に文字列<code>"100"</code>は入れられません。
+              数値として扱うなら数値を入れ続け、文字列として扱うなら最初から文字列で初期化します。
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="wrapper" class="chapter">
+      <div class="chapter-num">08</div>
+      <div class="chapter-body">
+        <h2>Integerなどをintと同じ感覚で比べる</h2>
+        <p>
+          <code>int</code>はプリミティブ型ですが、<code>Integer</code>は参照型です。
+          <code>Integer</code>は数値をオブジェクトとして扱うための型です。
+        </p>
+
+        <pre><code>int a = 1000;
+int b = 1000;
+System.out.println(a == b); // true
+
+Integer x = 1000;
+Integer y = 1000;
+System.out.println(x == y);      // false の可能性
+System.out.println(x.equals(y)); // true</code></pre>
+
+        <div class="important">
+          <strong>重要:</strong>
+          <code>Integer</code>は参照型です。
+          値として比べたいなら<code>equals</code>を使うか、必要に応じて<code>int</code>として扱います。
+        </div>
+
+        <h3>なぜ存在するのか</h3>
+        <p>
+          コレクションなど、オブジェクトを扱う仕組みではプリミティブ型をそのまま入れられない場面があります。
+          そのため<code>int</code>に対応する<code>Integer</code>、<code>double</code>に対応する<code>Double</code>のようなラッパー型があります。
+        </p>
+
+        <pre><code>List&lt;Integer&gt; scores = new ArrayList&lt;&gt;();
+scores.add(80);</code></pre>
+
+        <p class="mini">
+          上のように書けるのは、Javaが<code>int</code>と<code>Integer</code>の変換を自動で補ってくれるためです。
+          ただし、比較まで完全に同じ感覚でよいわけではありません。
+        </p>
+
+        <div class="practice">
+          <h3>練習問題 08</h3>
+          <p>次のコードを、数値として等しいかを正しく判定する形に直してください。</p>
+          <pre><code>Integer expected = 1000;
+Integer actual = 1000;
+
+if (expected == actual) {
+  System.out.println("一致");
+}</code></pre>
+          <details>
+            <summary>解答例と説明</summary>
+            <span class="answer-label">解答例</span>
+            <pre><code>Integer expected = 1000;
+Integer actual = 1000;
+
+if (expected.equals(actual)) {
+  System.out.println("一致");
+}</code></pre>
+            <p>
+              <code>Integer</code>は参照型なので、<code>==</code>では参照先の比較になります。
+              数値として同じかを見たい場合は、<code>equals</code>を使います。
+              ただし<code>expected</code>が<code>null</code>になる可能性がある場合は、先に<code>null</code>対策も必要です。
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="decimal" class="chapter">
+      <div class="chapter-num">09</div>
+      <div class="chapter-body">
+        <h2>doubleを正確な小数だと思ってしまう</h2>
+        <p>
+          <code>double</code>は小数を扱えますが、すべての10進小数を正確に表せるわけではありません。
+          コンピュータ内部では2進数で表現するため、<code>0.1</code>や<code>0.2</code>のような値に微小な誤差が出ることがあります。
+        </p>
+
+        <pre><code>System.out.println(0.1 + 0.2); // 0.30000000000000004 など</code></pre>
+
+        <div class="important">
+          <strong>重要:</strong>
+          <code>double</code>は測定値や平均などには便利ですが、金額のように正確な10進計算が必要な場面では注意が必要です。
+        </div>
+
+        <h3>どう考えればよいか</h3>
+        <p>
+          小数を「だいたいの量」として扱うなら<code>double</code>で十分なことが多いです。
+          一方、1円単位の金額や税計算など、丸め方が結果に影響する場合は、要件に応じて<code>BigDecimal</code>を使います。
+        </p>
+
+        <pre><code>import java.math.BigDecimal;
+
+BigDecimal a = new BigDecimal("0.1");
+BigDecimal b = new BigDecimal("0.2");
+System.out.println(a.add(b)); // 0.3</code></pre>
+
+        <div class="rule">
+          <div class="panel bad">
+            <p class="panel-title">注意が必要</p>
+            <pre><code>double price = 0.1;
+double tax = 0.2;
+System.out.println(price + tax);</code></pre>
+            <p class="mini">2進数で表す都合により、誤差が出ることがあります。</p>
+          </div>
+          <div class="panel good">
+            <p class="panel-title">正確さを重視</p>
+            <pre><code>BigDecimal price = new BigDecimal("0.1");
+BigDecimal tax = new BigDecimal("0.2");
+System.out.println(price.add(tax));</code></pre>
+            <p class="mini">文字列から作ることで、意図した10進数として扱いやすくなります。</p>
+          </div>
+        </div>
+
+        <div class="practice">
+          <h3>練習問題 09</h3>
+          <p>金額計算として、次のコードの問題点を説明し、<code>BigDecimal</code>を使う形に直してください。</p>
+          <pre><code>double item = 0.1;
+double fee = 0.2;
+double total = item + fee;
+System.out.println(total);</code></pre>
+          <details>
+            <summary>解答例と説明</summary>
+            <span class="answer-label">解答例</span>
+            <pre><code>import java.math.BigDecimal;
+
+BigDecimal item = new BigDecimal("0.1");
+BigDecimal fee = new BigDecimal("0.2");
+BigDecimal total = item.add(fee);
+
+System.out.println(total);</code></pre>
+            <p>
+              <code>double</code>では<code>0.1</code>や<code>0.2</code>を正確に表せないため、金額計算では誤差が問題になることがあります。
+              <code>BigDecimal</code>を使う場合は、<code>new BigDecimal("0.1")</code>のように文字列から作ると意図した10進数を表しやすくなります。
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Java Training
+  </footer>
+</body>
+</html>
